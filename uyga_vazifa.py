@@ -1,226 +1,185 @@
 # 1 - vazifa
 
-# from collections import namedtuple
+# numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 #
-# students = [
-#     ("Nematjon", 22, "major"),
-#     ("Saidazimxon", 21, "major")
-# ]
+# def kvadrat_son(son: int):
+#     return son ** 2
 #
-# Students = namedtuple("Person", ["name", "age", "major"])
-#
-# for student in students:
-#     student1 = Students(*student)
-#     print(f"Name: {student1.name}. Age: {student1.age}. Major: {student1.major}")
+# result = list(map(kvadrat_son, numbers))
+# print(result)
 
 # 2 - vazifa
 
-# from collections import namedtuple
+# def katta_harf(harf: str):
+#     return harf.isupper()
 #
-# mahsulotlar = [
-#     ("asal", 180000, "1 kg"),
-#     ("shakar", 16000,"1 kg"),
-#     ("un", 20000, "2 kg")
-# ]
-#
-# Mahsulot = namedtuple("Mahsulot", ["product_name", "price", "quantity"])
-#
-# for mahsulot in mahsulotlar:
-#     mahsulot1 = Mahsulot(*mahsulot)
-#     print(f"Mahsulot nomi: {mahsulot1.product_name}, Narxi: {mahsulot1.price}, Miqdori: {mahsulot1.quantity}")
+# harflar = ["A", "a", "B", "b", "C", "c", "D", "d"]
+# katta_harflar = list(filter(katta_harf, harflar))
+# print(katta_harflar)
 
 # 3 - vazifa
 
-# from collections import namedtuple
+# def region_number(number: str):
+#     if number.startswith("+998"):
+#         return number + " Uzb"
+#     elif number.startswith("+7"):
+#         return number + " Rus"
+#     elif number.startswith("+1"):
+#         return number + " USA"
 #
-# shaharlar = [
-#     ("Toshkeny", "O'zbekiston", 3075000),
-#     ("Moskva", "Rassiya", 144000000),
-#     ("Anqara", "Turkiya", 5600000)
-# ]
-#
-# Shahar = namedtuple("Shahar", ["city_name", "country", "population"])
-# aholi = []
-#
-# for shahar in shaharlar:
-#     shahar1 = Shahar(*shahar)
-#     aholi.append(shahar1.population)
-#
-# max_aholi = max(aholi)
-#
-# for shahar in shaharlar:
-#     shahar1 = Shahar(*shahar)
-#     if shahar1.population == max_aholi:
-#         print(f"Shahar: {shahar1.city_name}, Davlat: {shahar1.country}, Aholi soni: {shahar1.population}")
+# phone_numbers = ["+998991234567", "+79454874459", "+14385001031"]
+# result = list(map(region_number, phone_numbers))
+# print(result)
 
 # 4 - vazifa
 
-# from collections import namedtuple
+# def cap(name: str):
+#     return name.capitalize()
 #
-# mashinalar = [
-#     ("Germaniya", "BMW M5", 2022),
-#     ("O'zbekiston", "Gentra", 2024),
-#     ("Yaponiya", "Toyota Camry", 2021)
-# ]
-#
-# Mashinalar = namedtuple("Mashinalar", ["make", "model", "year"])
-# yili = []
-#
-# for mashina in mashinalar:
-#     mashina1 = Mashinalar(*mashina)
-#     yili.append(mashina1.year)
-#
-# new_car = max(yili)
-#
-# for mashina in mashinalar:
-#     mashina1 = Mashinalar(*mashina)
-#     if mashina1.year == new_car:
-#         print(f"Davlati: {mashina1.make}, Modeli: {mashina1.model}, Yili: {mashina1.year}")
+# names = ['alfred', 'tabitha', 'william', 'arla']
+# ismlar = list(map(cap, names))
+# print(ismlar)
 
 # 5 - vazifa
 
-# def salom():
-#     def hayr():
-#         print("Hayr")
-#     hayr()
+# def katta_son(son: int):
+#     return son > 75
 #
-# salom()
+# scores = [66, 90, 68, 59, 76, 60, 88, 74, 81, 65]
+# katta_sonlar = list(filter(katta_son, scores))
+# print(katta_sonlar)
 
 # 6 - vazifa
 
-# def ism(ism):
-#     def salom():
-#         print(f"Salom {ism}")
-#     salom()
+# def palindrom(word: str):
+#     return word.lower() == word[::-1].lower()
 #
-# ism("Nematjon")
+# words = ['Anna', 'Alexey', 'Alla', 'Kazak', 'Dom']
+# res = list(filter(palindrom, words))
+# print(res)
 
 # 7 - vazifa
 
-# def son1(son):
-#     def son2():
-#         return son + 5
-#     return son2()
+# def lens(word: str):
+#     return len(word)
 #
-# print(son1(17))
+# mevalar = ["Olma", "Anor", "Banan", "Tarvuz", "Nok"]
+# res = list(map(lens, mevalar))
+# print(res)
 
 # 8 - vazifa
 
-# def raqam():
-#     son = 0
-#     def counter():
-#         nonlocal son
-#         son += 1
-#         return son
-#     return counter
+# def merge(meva1: str, meva2: str):
+#     return meva1 + meva2
 #
-# c = raqam()
+# mevalar1 = ["apple", "banana", "cherry"]
+# mevalar2 = ["orange", "lemon", "pineapple"]
 #
-# print(c())
-# print(c())
-# print(c())
+# res = list(map(merge, mevalar1, mevalar2))
+# print(res)
 
 # 9 - vazifa
 
-# def raqam(son):
-#     def kvadrat():
-#         return son ** 2
-#     return kvadrat()
+# def merge(ism1: str, ism2: str):
+#     return ism1 + ism2
 #
-# print(raqam(5))
+# ismlar1 = ['Anna', 'Alexey', 'Alla', 'Kazak', 'Dom']
+# ismlar2 = ["Sobir", "Bakir", "Jalil", "Toxir"]
+#
+# res = list(map(merge, ismlar1, ismlar2))
+# print(res)
 
 # 10 - vazifa
 
-# def ismlar():
-#     ismlar = []
-#     def ismqoshish(ism):
-#         nonlocal ismlar
-#         ismlar.append(ism)
-#         return ismlar
-#     return ismqoshish
+# def takror(mevalar: list, meva: str):
+#     return mevalar.count(meva)
 #
-# ism = ismlar()
-#
-# print(ism("Nematjon"))
-# print(ism("Saidazimxon"))
-# print(ism("Shoxrux"))
+# fruits = ["Olma", "Anor", "Olma", "Gilos", "Banan", "Olma"]
+# print(takror(fruits, 'Olma'))
 
 # 11 - vazifa
 
-# def chegirma(foiz):
-#     def narx(summa):
-#         f = summa / 100 * foiz
-#         return summa - f
-#     return narx
+# def sonlar(num1: int):
+#     nums2 = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+#     return num1 in nums2
 #
-# narx = chegirma(16)
-# print(narx(250000))
+# nums1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+# res = list(filter(sonlar, nums1))
+# print(res)
 
 # 12 - vazifa
 
-# def mahsulot():
-#     mahsulotlar = []
-#     def mahsulotqoshish(mahsulot):
-#         nonlocal mahsulotlar
-#         mahsulotlar.append(mahsulot)
-#         return mahsulotlar
-#     return mahsulotqoshish
+# programming_languages = ['Python', 'C', 'C++', 'C#', 'Java', 'Basic', 'Kotlin',
+#                          'Pascal', 'JavaScript', 'Go', 'Dart', 'Assambler', 'Ruby',
+#                          'Rust', 'Mojo', 'Swift', 'Php']
 #
-# mahsulot1 = mahsulot()
+# def toq_tartib(word: str):
+#     return programming_languages.index(word) % 2 == 0
 #
-# print(mahsulot1("Olma"))
-# print(mahsulot1("Anor"))
-# print(mahsulot1("Uzum"))
+# res = list(filter(toq_tartib, programming_languages))
+# print(res)
 
 # 13 - vazifa
 
-# def matn():
-#     matn1 = ""
-#     def matn_qoshish(matn: str):
-#         nonlocal matn1
-#         matn1 += matn
-#         return matn1
-#     return matn_qoshish
+# programming_languages = ['Python', 'C', 'C++', 'C#', 'Java', 'Basic', 'Kotlin',
+#                          'Pascal', 'JavaScript', 'Go', 'Dart', 'Assambler', 'Ruby',
+#                          'Rust', 'Mojo', 'Swift', 'Php']
 #
-# m = matn()
-# print(m("Salom"))
-# print(m(" Dunyo"))
-# print(m(" Hello World"))
+# def toq_tartib(word: str):
+#     return programming_languages.index(word) >= programming_languages.index("Basic")
+#
+# res = list(filter(toq_tartib, programming_languages))
+# print(res)
 
 # 14 - vazifa
 
-# def raqam():
-#     son = -1
-#     def count():
-#         nonlocal son
-#         son += 2
-#         return son
-#     return count
+# from collections import namedtuple
 #
-# toq_son = raqam()
+# talabalar = [
+#     ("Nematjon", "FN28", 90),
+#     ("Abdulaziz", "FN28", 85),
+#     ("Shavkat", "FN28", 60),
+#     ("Abdullo", "FN28", 95),
+#     ("Ziyodullo", "FN28", 70)
+# ]
 #
-# print(toq_son())
-# print(toq_son())
-# print(toq_son())
-# print(toq_son())
+# Student = namedtuple("Student", ["ism", "guruh", "baho"])
+# baholar = []
+#
+# for talaba in talabalar:
+#     talaba1 = Student(*talaba)
+#     baholar.append(talaba1.baho)
+#
+# max_baho = max(baholar)
+#
+# for talaba in talabalar:
+#     talaba1 = Student(*talaba)
+#     if talaba1.baho == max_baho:
+#        print(f"Ismi: {talaba1.ism}, Guruhi: {talaba1.guruh}, Baho: {talaba1.baho}")
 
 # 15 - vazifa
 
-# def son1(son: int):
-#     def daraja1(daraja: int):
-#         return son ** daraja
-#     return daraja1
+# def kvadrat_generator():
+#     for i in range(1, 21):
+#         yield i ** 2
 #
-# son = son1(3)
-# print(son(5))
-# print(son(3))
+# for i in kvadrat_generator():
+#     print(i)
 
 # 16 - vazifa
 
-# def matn1(matn: str):
-#     def teskari_matn():
-#         return matn[::-1]
-#     return teskari_matn()
+# def text(matn: str):
+#     def len_text():
+#         return len(matn)
+#     return len_text()
 #
-# print(matn1("Tashkent"))
-# print(matn1("Najot Ta'lim"))
+# print(text("Najot Ta'lim"))
+
+# 17 - vazifa
+
+# def name(ism: str):
+#     def salom():
+#         return f"Salom {ism}"
+#     return salom()
+#
+# print(name("Nematjon"))
