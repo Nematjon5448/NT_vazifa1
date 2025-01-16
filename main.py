@@ -1,101 +1,79 @@
-from database import db
-
-def show_models():
-    for model in db.select_all_models():
-        print(f"{model[0]}. Name: {model[1]}")
-
-def a(name: str, count: int):
-    return name.center(count, " ") + ' ' + '|'
-
-def show_cars(model_id: int):
-    print('-' * 145)
-    print('|', a("ID", 8), a("NOMI", 102), a("QUVVATI", 8), a("NARXI", 8), a("MODEL_ID", 8))
-    for car in db.select_cars_by_model_id(model_id):
-        pass
-    print('-' * 145)
-
-def show_colors():
-    for color in db.select_colors():
-        print(f"{color[0]}. {color[1]}")
-
-def show_list_employees():
-    for employee in db.select_employees():
-        print(f"{employee[0]}. {employee[1]}")
-
-def show_info_employee(employee_id: int):
-    for emplyee in db.show_info_employee(employee_id):
-        print(f"{emplyee[0]}. {emplyee[1]}\n"
-              f"Maosh: {emplyee[2]}\n"
-              f"Lavozimi: {emplyee[3]}")
-
+from database_12 import db
 
 def run():
     while True:
-        command = input("Buyruqni kiriting: ").lower()
-        if command == 'stop':
-            print("Dastur to'xtadi!!!")
+        command = input("Buyuruqni kirting (exit - chiqish): ")
+        if command == "exit":
+            print("Siz Dasturni tark etdingiz ⛔️⛔️⛔️")
             break
-        elif command == 'add model':
+
+        elif command == "add category":
             while True:
-                model = input("Avtomobil modelini kiriting (exit - chiqish)")
-                if model.lower() == 'exit':
+                category = input('Kategoriya nomini kiriting (back - ortga): ')
+                if category == 'back':
                     break
+                db.insert_into_categories(category)
+                print("-Kategoriya yaratildi-")
 
-                db.insert_model(model)
-                print("Model qo'shildi✅")
-        elif command == 'add car':
+        elif command == 'show categories':
+            result = db.select_categories()
+            for i in result:
+                print(f"{i[0]}. {i[1].title()}")
+
+        elif command == 'add product':
+            product_name = input('Mahsulot nomini kiriting (back - ortga): ')
+            if product_name == 'back':
+                break
+            price = input('Mahsulot narxini kiriting (back - ortga): ')
+            if price == 'back':
+                break
+            quantity = input('Mahsulot miqdorini kiriting (back - ortga): ')
+            if quantity == 'back':
+                break
+            untill = input('Mahsulot yaroqlilik muddatini kiriting (dd.mm.yyyy shu formatda kiriting),(back - ortga): ')
+            if untill == 'back':
+                break
+            result = db.select_categories()
+            for i in result:
+                print(f"{i[0]}. {i[1].title()}")
+            category_id = input('Mahsulot kategoriyasini tanlang (kategoriya id raqamini kiriting): ')
+            if untill == 'back':
+                break
+            if price.isdigit() and quantity.isdigit() and category_id.isdigit():
+                db.insert_into_product(product_name, int(price), int(quantity), untill, category_id)
+                print("Mahsulot qo'shildi")
+
+        elif command == 'show products':
+            result = db.select_products()
+            for i in result:
+                print(f"{i[0]}. {i[1]}")
+
+        elif command == 'add comment':
             while True:
-                name = input("Avtomobil nomini kiriting (exit - chiqish): ")
-
-                if name.lower() == 'exit':
+                result = db.select_products()
+                for i in result:
+                    print(f"{i[0]}. {i[1]}")
+                product_id = input("Kommentariya yozmoqchi bo'lgan mahsulotingizni id sini kiriting: ")
+                if product_id == 'back':
                     break
-
-                power = input("Avtomobil ot kuchini kiriting: ")
-                price = input("Avtomobil narxini kiriting: ")
-
-                show_models()
-
-                model_id = input("Avtomobil modelini id sini kiriting: ")
-
-                show_colors()
-
-                color_id = input("Rangni tanlang (rangni id raqamini kiriting): ")
-                if power.isdigit() and price.isdigit() and model_id.isdigit():
-                    db.insert_car(name, int(power), float(price), int(model_id), int(color_id))
-                    print("Car qo'shildi✅✅")
-        elif command == 'show cars':
-            show_models()
-            model_id = input('Model id ni kiriting: ')
-            if model_id.isdigit():
-                show_cars(int(model_id))
-        elif command == 'add employee':
-            while True:
-                name = input("Ishchining ism va familiyasini kiriting (exit - chiqish): ")
-                if name == 'exit':
+                comment = input("Izoh qoldiring: ")
+                if comment == 'back':
                     break
-                oylik = input("Oylik maoshni kiriting: ")
-                lavozimi = input("Lavozimni kiriting: ")
-                if oylik.isdigit():
-                    db.insert_employee(name, int(oylik), lavozimi)
-                    print("ishchi qo'shildi✅✅✅")
-        elif command == 'list employees':
-            show_list_employees()
-        elif command == 'show info employee':
-            show_list_employees()
-            employee_id = input("ishchining id sini kiriting: ")
-            if employee_id.isdigit():
-                show_info_employee(int(employee_id))
-            else:
-                print("ishchining id sini faqat raqamda kiriting!!")
+                comment_user = input("Ismingizni kirting: ")
+                if comment_user == 'back':
+                    break
+                if product_id.isdigit():
+                    db.insert_into_comments(comment, product_id, comment_user)
+                    print("Izoh qo'shildi")
+
+        elif command == 'show comments':
+            result = db.select_comments()
+            for i in result:
+                print(f"{i[0]}. Mahsulot_id {i[3]}. {i[1]} ({i[4]})({i[2]})")
 
 if __name__ == '__main__':
-    # db.drop_table_models()
-    db.create_table_models()
-
-    db.create_table_colors()
-
-    db.create_table_cars()
-
-    db.create_table_employees()
-
+    # db.drop_tables()
+    db.create_table_categories()
+    db.create_table_products()
+    db.create_table_comments()
     run()
