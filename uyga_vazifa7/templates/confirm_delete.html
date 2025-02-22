@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+  <h1>Siz bu kitobni o'chirmoqchimisiz</h1>
+  <form method="post">
+    {% csrf_token %}
+      <button type="submit">Ha</button>
+  </form>
+  <a href="{% url 'kitob_haqida' book.pk %}">Ortga</a>
+</body>
+</html>
