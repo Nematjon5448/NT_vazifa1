@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1 align="center">Darslar</h1>
+
+  <br>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title" align="center">{{ kurs.nomi }}</h5>
+        <br>
+        {% for d in dars %}
+        {% if d.kurs_id == kurs.pk %}
+          <a href="{% url 'dars_batafsil' d.pk %}"><p class="card-text">{{ d.nomi }}</p></a>
+          <br>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+  <br>
+
+{% endblock content %}

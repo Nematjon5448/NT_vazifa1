@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1 align="center">Dars haqida</h1>
+
+  <br>
+
+    <div class="card">
+  <div class="card-body">
+    <h3 class="card-title">{{ dars.nomi }}</h3>
+    <br>
+    <p class="card-text"><b>O'qituvchi:</b> {{ dars.oqituvchi }}</p>
+    <p class="card-text"><b>Mavzu:</b> {{ dars.mavzu }}</p>
+    <p class="card-text"><b>Xona:</b> {{ dars.xona }}</p>
+    <p class="card-text"><b>Boshlanish vaqti:</b> {{ dars.boshlanish_vaqti }}</p>
+    <p class="card-text"><b>Tugash vaqti:</b> {{ dars.tugash_vaqti }}</p>
+  </div>
+</div>
+
+  <br>
+  {% if request.user.is_authenticated %}
+  <div class="card">
+    <form method="post" action="{% url 'comment_saqlash' dars.pk %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Saqlash</button>
+    </form>
+  </div>
+  {% endif %}
+
+  {% for comment in comments %}
+  <div class="card" style="margin-top: 5px; margin-bottom: 5px; padding-top: 15px; padding-right: 15px; padding-left: 15px">
+      <div>
+        <div class="d-flex justify-content-between">
+          <div><a href="">{{ comment.foydalanuvchi }}</a></div>
+          {% if request.user == comment.foydalanuvchi or request.user.is_superuser %}
+          <div><a href="{% url 'comment_ochirish' dars.pk comment.pk %}">o'chirish</a></div>
+          <div><a href="{% url 'comment_yangilash' dars.pk comment.pk %}">yangilash</a></div>
+          {% endif %}
+        </div>
+      </div>
+      <p>{{ comment.matni }}</p>
+      <p>{{ comment.yaratilgan_vaqt | date:"d M Y" }}</p>
+  </div>
+  {% endfor %}
+
+{% endblock content %}
