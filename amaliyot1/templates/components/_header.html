@@ -1,0 +1,29 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'asosiy_sahifa' %}">Asosiy sahifa</a>
+                    </li>
+                </ol>
+            </div>
+            {% if not request.user.is_authenticated %}
+            <div class="d-flex align-items-center">
+                <a href="{% url 'login' %}" class="btn btn-link px-3 me-2">
+                    Login
+                </a>
+                <a href="{% url 'register' %}" class="btn btn-primary me-3">
+                    Sign up for free
+                </a>
+            </div>
+            {% else %}
+            <div class="d-flex align-items-center">
+                <a href="{% url 'logout' %}" class="btn btn-primary me-3">
+                    Logout
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+</header>

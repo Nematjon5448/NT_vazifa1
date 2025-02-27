@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h2 align="center">Brandlar</h2>
+
+  <br>
+
+  <div class="d-flex justify-content-around">
+    {% for b in brandlar %}
+    <div>
+        <a href="{% url 'brand_boyicha' b.pk %}">{{ b.nomi }}</a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <br><br>
+
+  <h2 align="center">Ranglar</h2>
+
+  <br>
+
+  <div class="d-flex justify-content-around">
+    {% for r in ranglar %}
+    <div>
+        <a href="{% url 'rang_boyicha' r.pk %}">{{ r.nomi }}</a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <br><br>
+{% if mashina %}
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ brand.nomi }}</h5>
+        {% for m in mashina %}
+        {% if m.brand_id == brand.id %}
+        <a href="{% url 'mashina_batafsil' m.pk %}"><p class="card-text">{{ m.nomi }}</p></a>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% elif rang %}
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ rang.nomi }}</h5>
+        {% for m in mashinalar %}
+        {% if m.rang_id == rang.id %}
+          <a href="{% url 'mashina_batafsil' m.pk %}"><p class="card-text">{{ m.nomi }}</p></a>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock content %}
