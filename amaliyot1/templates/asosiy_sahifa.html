@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load main_extras %}
 
 {% block content %}
 
@@ -7,6 +8,7 @@
   <br>
 
   <div class="d-flex justify-content-around">
+    {% send_all_brand as brandlar %}
     {% for b in brandlar %}
     <div>
         <a href="{% url 'brand_boyicha' b.pk %}">{{ b.nomi }}</a>
@@ -21,6 +23,7 @@
   <br>
 
   <div class="d-flex justify-content-around">
+    {% send_all_color as ranglar %}
     {% for r in ranglar %}
     <div>
         <a href="{% url 'rang_boyicha' r.pk %}">{{ r.nomi }}</a>

@@ -5,7 +5,11 @@
   <br>
 
 <div class="card mb-3">
+  {% if mashina.rasm %}
   <img src="{{ mashina.rasm.url }}" class="card-img-top" alt="Wild Landscape"/>
+  {% else %}
+  <img src="https://static.vecteezy.com/system/resources/previews/008/296/130/non_2x/sports-car-line-icon-isolated-on-white-background-free-vector.jpg" class="card-img-top" alt="Wild Landscape"/>
+  {% endif %}
   <div class="card-body">
     <h5 class="card-title" align="center">{{ mashina.nomi }}</h5>
     <p class="card-text"><b>Ot kuchi: </b>{{ mashina.ot_kuchi }}</p>

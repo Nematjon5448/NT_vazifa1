@@ -2,33 +2,23 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.conf import settings
 
 from .models import Brand, Rang, Car, Comment
-from .forms import CommentForm
+from .forms import CommentForm, SendEmail, CarForm
 from django.contrib.auth import login, authenticate, logout
 
 def asosiy_sahifa(request):
-    brandlar = Brand.objects.all()
-    ranglar = Rang.objects.all()
-
-    context = {
-        'brandlar': brandlar,
-        'ranglar': ranglar,
-    }
-
-    return render(request, 'asosiy_sahifa.html', context)
+    return render(request, 'asosiy_sahifa.html')
 
 def brand_boyicha(request, brand_id):
     brand = Brand.objects.get(pk=brand_id)
     mashina = Car.objects.filter(brand_id=brand_id)
-    ranglar = Rang.objects.all()
-    brandlar = Brand.objects.all()
 
     context = {
         'brand': brand,
-        'mashina': mashina,
-        'ranglar': ranglar,
-        'brandlar': brandlar
+        'mashina': mashina
     }
 
     return render(request, 'asosiy_sahifa.html', context)
@@ -36,14 +26,10 @@ def brand_boyicha(request, brand_id):
 def rang_boyicha(request, rang_id):
     rang = Rang.objects.get(pk=rang_id)
     mashinalar = Car.objects.filter(rang_id=rang_id)
-    ranglar = Rang.objects.all()
-    brandlar = Brand.objects.all()
 
     context = {
         'rang': rang,
-        'mashinalar': mashinalar,
-        'ranglar': ranglar,
-        'brandlar': brandlar
+        'mashinalar': mashinalar
     }
 
     return render(request, 'asosiy_sahifa.html', context)
@@ -97,3 +83,44 @@ def user_logout(request):
     logout(request)
     messages.warning(request, 'Siz accountdan chiqdingiz!!!')
     return redirect('login')
+
+def habar_yuborish(request):
+    if request.method == 'POST':
+        form = SendEmail(data=request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            message = form.cleaned_data.get('message')
+            for user in User.objects.all():
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[user.email]
+                )
+        messages.success(request, "Habar yuborildi!")
+        return redirect('asosiy_sahifa')
+    else:
+        form = SendEmail()
+    context = {
+        'form': form
+    }
+    return render(request, 'habar_yuborish.html', context)
+
+def mashina_qoshish(request):
+    if request.method == 'POST':
+        form = CarForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            car = Car.objects.create(**form.cleaned_data)
+            for user in User.objects.all():
+                send_mail(
+                    subject="Mashina qo'shildi",
+                    message=f"{car.nomi} mashinasi joylandi",
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[user.email]
+                )
+            messages.success(request, "Habar yuborildi!")
+            return redirect('asosiy_sahifa')
+    context = {
+        'form': CarForm()
+    }
+    return render(request, 'add_car.html', context)
