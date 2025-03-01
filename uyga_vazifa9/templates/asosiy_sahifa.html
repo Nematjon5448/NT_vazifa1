@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h1 align="center">Kitoblar</h1>
+
+  <br>
+
+<div class="row">
+  {% for k in kurs %}
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title" align="center">{{ k.nomi }}</h5>
+        {% for d in dars %}
+        {% if d.kurs_id == k.id %}
+          <p class="card-text">{{ d.nomi }}</p>
+        {% endif %}
+        {% endfor %}
+        <a href="{% url 'kurs_batafsil' k.pk %}" class="btn btn-primary" data-mdb-ripple-init>Batafsil</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+  <br>
+
+{% endblock content %}
