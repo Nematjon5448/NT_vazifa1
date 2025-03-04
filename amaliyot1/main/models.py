@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 # Create your models here.
 
@@ -27,6 +28,9 @@ class Car(models.Model):
 
     def __str__(self):
         return self.nomi
+
+    # def get_absolute_url(self):
+    #     return reverse_lazy('mashina_batafsil', kwargs={'car_id': self.pk})
 
     class Meta:
         verbose_name_plural = 'Mashinalar'

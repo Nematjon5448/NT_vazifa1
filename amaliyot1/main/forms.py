@@ -12,15 +12,6 @@ class CommentForm(forms.ModelForm):
             })
         }
 
-class SendEmail(forms.Form):
-    subject = forms.CharField(max_length=250, widget=forms.TextInput(attrs={
-        'class': 'form-control'
-    }))
-    message = forms.CharField(widget=forms.Textarea(attrs={
-        'class': 'form-control',
-        'rows': 3
-    }))
-
 class CarForm(forms.ModelForm):
     class Meta:
         model = Car

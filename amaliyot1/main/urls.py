@@ -1,17 +1,16 @@
 from django.urls import path
 
-from .views import asosiy_sahifa, brand_boyicha, rang_boyicha, mashina_batafsil, comment_saqlash, user_login, \
-    user_register, user_logout, habar_yuborish, mashina_qoshish
+from .views import asosiy_sahifa, BrandBoyichaView, RangBoyichaListView, MashinaBatafsilDetailView, CommentSaqlashView, UserLoginView, \
+    UserRegisterView, user_logout, MashinaQoshishCreateView
 
 urlpatterns = [
     path('', asosiy_sahifa, name='asosiy_sahifa'),
-    path('brand/<int:brand_id>/', brand_boyicha, name='brand_boyicha'),
-    path('rang/<int:rang_id>/', rang_boyicha, name='rang_boyicha'),
-    path('mashina/<int:car_id>/', mashina_batafsil, name='mashina_batafsil'),
-    path('mashina/<int:car_id>/comment/saqlash/', comment_saqlash, name='comment_saqlash'),
-    path('login/', user_login, name='login'),
-    path('register/', user_register, name='register'),
+    path('brand/<int:brand_id>/', BrandBoyichaView.as_view(), name='brand_boyicha'),
+    path('rang/<int:rang_id>/', RangBoyichaListView.as_view(), name='rang_boyicha'),
+    path('mashina/<int:car_id>/', MashinaBatafsilDetailView.as_view(), name='mashina_batafsil'),
+    path('mashina/<int:car_id>/comment/saqlash/', CommentSaqlashView.as_view(), name='comment_saqlash'),
+    path('login/', UserLoginView.as_view(), name='login'),
+    path('register/', UserRegisterView.as_view(), name='register'),
     path('logout/', user_logout, name='logout'),
-    path('send-message/', habar_yuborish, name='habar_yuborish'),
-    path('add_car/', mashina_qoshish, name='mashina_qoshish')
+    path('add_car/', MashinaQoshishCreateView.as_view(), name='mashina_qoshish')
 ]
