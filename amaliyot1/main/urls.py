@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import asosiy_sahifa, BrandBoyichaView, RangBoyichaListView, MashinaBatafsilDetailView, CommentSaqlashView, UserLoginView, \
-    UserRegisterView, user_logout, MashinaQoshishCreateView
+from .views import (asosiy_sahifa, BrandBoyichaView, RangBoyichaListView, MashinaBatafsilDetailView, CommentSaqlashView,
+                    UserLoginView, UserRegisterView, user_logout, MashinaQoshishCreateView, MashinaUpdateView, MashinaDeleteView, test_index)
 
 urlpatterns = [
     path('', asosiy_sahifa, name='asosiy_sahifa'),
@@ -12,5 +12,7 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login'),
     path('register/', UserRegisterView.as_view(), name='register'),
     path('logout/', user_logout, name='logout'),
-    path('add_car/', MashinaQoshishCreateView.as_view(), name='mashina_qoshish')
+    path('add_car/', MashinaQoshishCreateView.as_view(), name='mashina_qoshish'),
+    path('mashina/<int:car_id>/update/', MashinaUpdateView.as_view(), name='mashina_yangilash'),
+    path('mashina/<int:car_id>/delete/', MashinaDeleteView.as_view(), name='mashina_ochirish')
 ]

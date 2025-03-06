@@ -29,8 +29,8 @@ class Car(models.Model):
     def __str__(self):
         return self.nomi
 
-    # def get_absolute_url(self):
-    #     return reverse_lazy('mashina_batafsil', kwargs={'car_id': self.pk})
+    def get_absolute_url(self):
+        return reverse_lazy('mashina_batafsil', kwargs={'car_id': self.pk})
 
     class Meta:
         verbose_name_plural = 'Mashinalar'

@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.views import View
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 
 from .models import Brand, Rang, Car, Comment
 from .forms import CommentForm, CarForm
@@ -17,10 +18,16 @@ class BrandBoyichaView(ListView):
     template_name = 'asosiy_sahifa.html'
     context_object_name = 'mashina'
     ordering = 'nomi'
+    paginate_by = 3
 
     def get_queryset(self):
         brand_id = self.kwargs.get('brand_id')
-        return Car.objects.filter(brand_id=brand_id)
+        if self.request.GET.get('query'):
+            word = self.request.GET.get('query')
+            mashina = Car.objects.filter(nomi__icontains=word, brand_id=brand_id)
+        else:
+            mashina = Car.objects.filter(brand_id=brand_id)
+        return mashina
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -32,10 +39,16 @@ class RangBoyichaListView(ListView):
     model = Car
     template_name = 'asosiy_sahifa.html'
     context_object_name = 'mashinalar'
+    paginate_by = 3
 
     def get_queryset(self):
         rang_id = self.kwargs.get('rang_id')
-        return Car.objects.filter(rang_id=rang_id)
+        if self.request.GET.get('query'):
+            word = self.request.GET.get('query')
+            mashina = Car.objects.filter(nomi__icontains=word, rang_id=rang_id)
+        else:
+            mashina = Car.objects.filter(rang_id=rang_id)
+        return mashina
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -47,6 +60,7 @@ class MashinaBatafsilDetailView(DetailView):
     model = Car
     context_object_name = 'mashina'
     pk_url_kwarg = 'car_id'
+    template_name = 'mashina_batafsil.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -104,8 +118,33 @@ def user_logout(request):
 
 class MashinaQoshishCreateView(CreateView):
     model = Car
-    fields = '__all__'
+    # fields = '__all__'
     template_name = 'add_car.html'
+    form_class = CarForm
 
     def get_success_url(self):
         return reverse_lazy('mashina_batafsil', kwargs={'car_id': self.object.pk})
+
+class MashinaUpdateView(UpdateView):
+    model = Car
+    form_class = CarForm
+    pk_url_kwarg = 'car_id'
+    template_name = 'add_car.html'
+
+class MashinaDeleteView(DeleteView):
+    model = Car
+    pk_url_kwarg = 'car_id'
+    template_name = 'confirm_delete.html'
+    context_object_name = 'mashina'
+    success_url = reverse_lazy('asosiy_sahifa')
+
+def test_index(request, rang_id):
+    rang = Rang.objects.get(pk=rang_id)
+    mashina = Car.objects.all()
+    paginator = Paginator(mashina, 2)
+    page_number = request.GET.get('page', 1)
+    context = {
+        'mashinalar': paginator.page(1),
+        "rang": rang
+    }
+    return render(request, 'asosiy_sahifa.html', context)

@@ -5,6 +5,16 @@
   <br>
 
 <div class="card mb-3">
+  <div class="card">
+    <div class="d-flex justify-content-around">
+      <div>
+          <a href="{% url 'mashina_yangilash' mashina.pk %}"><i class="far fa-pen-to-square fa-3x"></i></a>
+      </div>
+      <div>
+          <a href="{% url 'mashina_ochirish' mashina.pk %}"><i class="far fa-trash-can fa-3x"></i></a>
+      </div>
+    </div>
+  </div>
   {% if mashina.rasm %}
   <img src="{{ mashina.rasm.url }}" class="card-img-top" alt="Wild Landscape"/>
   {% else %}

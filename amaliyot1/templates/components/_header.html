@@ -11,6 +11,23 @@
                     </li>
                 </ol>
             </div>
+
+            <div>
+                <form class="d-flex input-group w-auto">
+                  <input
+                          name="query"
+                    type="search"
+                    class="form-control rounded"
+                    placeholder="Search"
+                    aria-label="Search"
+                    aria-describedby="search-addon"
+                  />
+                  <span class="input-group-text border-0" id="search-addon">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </form>
+            </div>
+
             {% if not request.user.is_authenticated %}
             <div class="d-flex align-items-center">
                 <a href="{% url 'login' %}" class="btn btn-link px-3 me-2">
