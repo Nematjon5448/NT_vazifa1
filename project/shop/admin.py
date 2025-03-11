@@ -2,9 +2,6 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from .models import Category, Product, ProductImage
 
-
-admin.site.register(ProductImage)
-
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     if Category.parent:
