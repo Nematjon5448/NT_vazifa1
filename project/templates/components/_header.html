@@ -69,7 +69,7 @@
                             <!-- Begin Header Logo Area -->
                             <div class="col-lg-3">
                                 <div class="logo pb-sm-30 pb-xs-30">
-                                    <a href="{% url 'index' %}">
+                                    <a href="{% url 'home' %}">
                                         <img src="{% static 'redesigne-2.jpg' %}" alt="">
                                     </a>
                                 </div>
@@ -232,7 +232,7 @@
                                 <div class="hb-menu">
                                     <nav>
                                         <ul>
-                                            <li class="dropdown-holder"><a href="index.html">Home</a>
+                                            <li class="dropdown-holder"><a href="{% url 'home' %}">Home</a>
                                                 <ul class="hb-dropdown">
                                                     <li class="active"><a href="index.html">Home One</a></li>
                                                     <li><a href="index-2.html">Home Two</a></li>
@@ -240,7 +240,7 @@
                                                     <li><a href="index-4.html">Home Four</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="megamenu-holder"><a href="shop-left-sidebar.html">Shop</a>
+                                            <li class="megamenu-holder"><a href="{% url 'shop' %}">Shop</a>
                                                 <ul class="megamenu hb-megamenu">
                                                     <li><a href="shop-left-sidebar.html">Shop Page Layout</a>
                                                         <ul>

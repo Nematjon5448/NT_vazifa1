@@ -15,14 +15,16 @@
                             <div class="slider-area">
                                 <div class="slider-active owl-carousel">
                                     <!-- Begin Single Slide Area -->
-                                    <div class="single-slide align-center-left  animation-style-01 bg-1">
-                                        <div class="slider-progress"></div>
+                                    <div class="single-slide align-center-left  animation-style-01">
+                                        <div style="margin-left: auto">
+                                            <img src="{{ product_max_discount.get_image }}" height="473px" align="right">
+                                        </div>
                                         <div class="slider-content">
-                                            <h5>Sale Offer <span>-20% Off</span> This Week</h5>
-                                            <h2>Chamcham Galaxy S9 | S9+</h2>
-                                            <h3>Starting at <span>$1209.00</span></h3>
+                                            <h5>Savdo taklifi <span>-{{ product_max_discount.discount }}% chegirma</span> bu hafta</h5>
+                                            <h2>{{ product_max_discount.name }}</h2>
+                                            <h3><span>${{ product_max_discount.get_price }}</span> dan boshlanadi</h3>
                                             <div class="default-btn slide-btn">
-                                                <a class="links" href="shop-left-sidebar.html">Shopping Now</a>
+                                                <a class="links" href="shop-left-sidebar.html">Xarid qilish</a>
                                             </div>
                                         </div>
                                     </div>
@@ -263,9 +265,9 @@
                                     <span>Noutbuklar</span>
                                 </h2>
 <!--                                <ul class="li-sub-category-list">-->
-<!--                                    <li class="active"><a href="shop-left-sidebar.html">Prime Video</a></li>-->
-<!--                                    <li><a href="shop-left-sidebar.html">Computers</a></li>-->
-<!--                                    <li><a href="shop-left-sidebar.html">Electronics</a></li>-->
+<!--                                    <li class="active"><a href="shop.html">Prime Video</a></li>-->
+<!--                                    <li><a href="shop.html">Computers</a></li>-->
+<!--                                    <li><a href="shop.html">Electronics</a></li>-->
 <!--                                </ul>-->
                             </div>
                             <div class="row">
@@ -613,16 +615,17 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <!-- Begin Li's Static Home Image Area -->
-                            <div class="li-static-home-image"></div>
+                            <div class="image">
+                                <img src="{{ promotion.image.url }}">
+                            </div>
                             <!-- Li's Static Home Image Area End Here -->
                             <!-- Begin Li's Static Home Content Area -->
                             <div class="li-static-home-content">
-                                <p>Sale Offer<span>-20% Off</span>This Week</p>
-                                <h2>Featured Product</h2>
-                                <h2>Meito Accessories 2018</h2>
+                                <p>{{ promotion.title }} <span>-{{ promotion.product.discount }}%</span></p>
+                                <h5>{{ promotion.content }}</h5>
                                 <p class="schedule">
-                                    Starting at
-                                    <span> $1209.00</span>
+                                    {{ promotion.text }}
+                                    <span> ${{ promotion.product.get_price }}</span>
                                 </p>
                                 <div class="default-btn">
                                     <a href="shop-left-sidebar.html" class="links">Shopping Now</a>

@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Category, Product, ProductImage
+from .models import Category, Product, ProductImage, Promotion
+
+admin.site.register(Promotion)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

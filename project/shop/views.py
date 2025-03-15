@@ -1,8 +1,8 @@
 from django.urls import reverse_lazy
-
+from django.db.models import Max, Min, Sum, Avg
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Product, Category, Comment
+from .models import Product, Category, Comment, Promotion
 
 
 class IndexView(ListView):
@@ -13,6 +13,8 @@ class IndexView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
         context['categories'] = Category.objects.filter(parent=None)
+        context['product_max_discount'] = Product.objects.all().order_by('-discount').first()
+        context['promotion'] = Promotion.objects.last()
         return context
 
 class SingleProduct(DetailView):
@@ -40,3 +42,20 @@ class CommentSaqlash(CreateView):
         form.instance.product = Product.objects.get(pk=product_id)
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+class ShopView(ListView):
+    model = Product
+    template_name = 'shop/shop.html'
+    context_object_name = 'products'
+    
+    def get_queryset(self):
+        slug = self.kwargs.get("category_slug")
+        if slug:
+            products = Product.objects.filter(category__slug=slug)
+            return products
+        return super().get_queryset()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['categories'] = Category.objects.all()
+        return context

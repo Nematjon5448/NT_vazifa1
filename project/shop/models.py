@@ -19,7 +19,21 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount = models.IntegerField(default=0)
     quantity = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+
+    def __str__(self):
+        return self.name
+
+    def get_image(self):
+        images = self.images.all()
+        if images:
+            return images[0].image.url
+        return "https://salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png"
+
+    def get_price(self):
+        if self.discount > 0:
+            return self.price - self.price * self.discount / 100
+        return self.price
 
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='products/images/')
@@ -36,6 +50,13 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user.username}"
+
+class Promotion(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    title = models.CharField(max_length=150)
+    content = models.CharField(max_length=150)
+    text = models.CharField(max_length=300)
+    image = models.ImageField(upload_to='promotion/image', null=True, blank=True)
 
 
 
