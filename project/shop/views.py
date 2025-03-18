@@ -50,12 +50,26 @@ class ShopView(ListView):
     
     def get_queryset(self):
         slug = self.kwargs.get("category_slug")
-        if slug:
-            products = Product.objects.filter(category__slug=slug)
-            return products
-        return super().get_queryset()
+        if self.request.method == 'POST':
+            range_input = int(self.request.POST.get("rangeInput"))
+            if slug:
+                return Product.objects.filter(category__slug=slug, price__lte=range_input)
+            return Product.objects.filter(price__lte=range_input)
+        else:
+            if slug:
+                products = Product.objects.filter(category__slug=slug)
+                return products
+            return super().get_queryset()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
         context['categories'] = Category.objects.all()
+
+        max_price =  self.get_queryset().aggregate(Max('price')).get("price__max")
+        min_price =  self.get_queryset().aggregate(Min('price')).get("price__min")
+        context['max_price'] = max_price
+        context['min_price'] = min_price
         return context
+
+    def post(self, request, category_slug=None):
+        return self.get(request, category_slug)

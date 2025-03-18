@@ -44,3 +44,12 @@
         <script src="{% static 'js/scrollUp.min.js' %}"></script>
         <!-- Main/Activator js -->
         <script src="{% static 'js/main.js' %}"></script>
+
+        <!-- slide-bar -->
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        let range = document.getElementById("rangeInput");
+        let output = document.getElementById("amount");
+        output.textContent = range.value;
+        });
+        </script>
