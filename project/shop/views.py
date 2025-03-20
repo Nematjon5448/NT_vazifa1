@@ -28,10 +28,14 @@ class SingleProduct(DetailView):
         context['comments'] = Comment.objects.filter(product=self.object.pk)
         return context
 
+    def post(self, request, product_id=None):
+        print(request.POST)
+        return self.get(request, product_id)
+
 class CommentSaqlash(CreateView):
     model = Comment
     template_name = 'shop/single-product.html'
-    fields = ['text']
+    fields = ['text', 'rating']
     pk_url_kwarg = 'product_id'
 
     def get_success_url(self):
