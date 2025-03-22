@@ -59,6 +59,39 @@ class Promotion(models.Model):
     text = models.CharField(max_length=300)
     image = models.ImageField(upload_to='promotion/image', null=True, blank=True)
 
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    discontinued = models.BooleanField(default=False)
+    price = models.DecimalField(max_digits=15, decimal_places=2)
+
+
+    def __str__(self):
+        return f"{self.user.username} - {self.created}"
+
+class OrderProduct(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    quantity = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.product.name}"
+
+class City(models.Model):
+    name = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.name
+
+class Delivery(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    phone_number = models.CharField(max_length=13)
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+    address = models.CharField(max_length=250)
+    comment = models.CharField(max_length=1000, null=True, blank=True)
+    delivered = models.BooleanField(default=False)
 
 
 
