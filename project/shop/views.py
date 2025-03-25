@@ -1,8 +1,9 @@
 from django.urls import reverse_lazy
 from django.db.models import Max, Min, Sum, Avg
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Product, Category, Comment, Promotion
+from django.views import View
+from .models import Product, Category, Comment, Promotion, Order, OrderProduct, Customer, City, Delivery
 
 
 class IndexView(ListView):
@@ -77,3 +78,43 @@ class ShopView(ListView):
 
     def post(self, request, category_slug=None):
         return self.get(request, category_slug)
+
+# Cart
+
+class Cart(View):
+    def get(self, request):
+        pass
+
+class ToCart(View):
+    def get(self, request, product_slug, action):
+        customer, created = Customer.objects.get_or_create(
+            user=request.user,
+        )
+        order, created = Order.objects.get_or_create(
+            customer=customer,
+            discontinued=False
+        )
+        if action == 'add':
+            try:
+                order_product = OrderProduct.objects.get(order=order, product__slug=product_slug)
+            except:
+                if request.method == 'POST':
+                    quantity = request.POST.get('quantity')
+                    order_product = OrderProduct.objects.create(order=order,
+                                                                product=Product.objects.get(slug=product_slug),
+                                                                quantity=quantity)
+                else:
+                    order_product = OrderProduct.objects.create(order=order,
+                                                     product=Product.objects.get(slug=product_slug),
+                                                     quantity=1)
+        else:
+            pass
+        page = request.META.get("HTTP_REFERER", 'home')
+        return redirect(page)
+
+    def post(self, request, product_slug, action):
+        return self.get(request, product_slug, action)
+
+class Checkout(View):
+    def get(self, request):
+        pass
