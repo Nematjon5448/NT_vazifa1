@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>Hello World</h1>
+
+
+    <script>
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:8000/api/v1/burgerlar/")
+
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4){
+                console.log(xhr.responseText);
+            } else {
+                console.log("Server response: ", xhr.statusText);
+            }
+        }
+
+        xhr.send();
+
+    </script>
+</body>
+</html>
