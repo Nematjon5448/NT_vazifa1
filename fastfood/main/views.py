@@ -2,10 +2,15 @@ from django.shortcuts import render
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions
 from rest_framework.throttling import AnonRateThrottle
+from rest_framework.pagination import CursorPagination
 
 from .models import Burgerlar, Lavashlar, Ichimliklar, Souslar
 from .serializers import BurgerlarSerializer, LavashlarSerializer, IchimliklarSerializer, SouslarSerializer
 from .permissions import BurgerPermissions, LavashPermissions, IchimliklarPermissions, SouslarPermissions
+
+class FastFoodPagination(CursorPagination):
+    ordering = '-name'
+    page_size = 2
 
 class BurgerlarThrottle(AnonRateThrottle):
     scope = "burgerlar_list"
