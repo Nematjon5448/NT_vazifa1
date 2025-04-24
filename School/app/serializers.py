@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from .models import Teacher, Class, Student, User, Admin
+from .models import (Teacher, Student, User, Admin, Course,
+                     Group, StudentGroup, Lesson, Attendance,
+                     Like, Homework, HomeworkStudent)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -107,50 +109,55 @@ class StudentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-
-class ClassSerializer(serializers.ModelSerializer):
-    teachers = TeacherSerializer(many=True)
-    students = StudentSerializer(many=True)
-
+class CourseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Class
+        model = Course
         fields = '__all__'
 
-    def create(self, validated_data):
-        teachers = validated_data.pop("teachers")
-        students = validated_data.pop("students")
-        clas = Class.objects.create(**validated_data)
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = '__all__'
 
-        for teacher_data in teachers:
-            teacher = Teacher.objects.create(**teacher_data)
-            teacher.class_id.set([clas])
+class StudentGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentGroup
+        fields = '__all__'
 
-        for student_data in students:
-            Student.objects.create(class_id=clas, **student_data)
+class LessonSerializer(serializers.ModelSerializer):
+    likes = serializers.SerializerMethodField()
+    dislikes = serializers.SerializerMethodField()
 
-        return clas
+    group_id = serializers.PrimaryKeyRelatedField(write_only=True, source='group',
+                                                  queryset=Group.objects.all())
 
-    def update(self, instance, validated_data):
-        teachers_data = validated_data.pop("teachers", None)
-        students_data = validated_data.pop("students", None)
+    class Meta:
+        model = Lesson
+        fields = ['id', 'name', 'created', 'group', 'likes', 'dislikes', 'group_id']
+        depth = 2
 
-        for attr, value in validated_data.items():
-            setattr(instance, attr, value)
-        instance.save()
+    def get_likes(self, obj):
+        return len(obj.like_set.filter(like=True))
 
-        if teachers_data is not None:
-            instance.teachers.all().delete()
-            for teachers_data in teachers_data:
-                teacher = Teacher.objects.create(**teachers_data)
-                teacher.class_id.set([instance])
+    def get_dislikes(self, obj):
+        return len(obj.like_set.filter(like=False))
 
-        if students_data is not None:
-            instance.students.all().delete()
-            for students_data in students_data:
-                Student.objects.create(class_id=instance, **students_data)
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = '__all__'
 
-        return instance
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Like
+        fields = '__all__'
 
+class HomeworkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Homework
+        fields = '__all__'
 
-
+class HomeworkStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HomeworkStudent
+        fields = '__all__'
